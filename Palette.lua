@@ -123,7 +123,9 @@ local palette = {
 
 -- Usage: Palette(color: string, shade: number?)
 return function(color, shade)
-	if not shade then shade = 500 end
+	if not shade then
+		shade = 500
+	end
 	
 	assert(palette[color], color .. ' is not a valid color')
 	assert(palette[color][shadeIndex[shade]], color .. ' ' .. shade .. ' is not a valid shade')
