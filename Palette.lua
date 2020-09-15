@@ -1,3 +1,27 @@
+--[[
+@name Promise
+@description Color picker using Google Material's color system to define shades
+@version 1.0.1
+@author dig1t
+
+Functions
+	Palette(color, shade: 500) => Color3 Creates a Color3 object from the given color
+
+Examples
+local button = Instance.new('TextButton')
+local btnColor = Palette('blue', 500)
+local btnHover = Palette('blue', 300)
+
+button.BackgroundColor3 = btnColor
+
+button.MouseEnter:Connect(function()
+	btn.BackgroundColor3 = btnHover
+end)
+
+button.MouseLeave:Connect(function()
+	btn.BackgroundColor3 = btnColor
+end)
+]]
 local shadeIndex = {
 	[50] = 1, [100] = 2, [200] = 3, [300] = 4, [400] = 5, [500] = 6, [600] = 7, [700] = 8, [800] = 9, [900] = 10
 }
@@ -121,11 +145,8 @@ local palette = {
 	};
 }
 
--- Usage: Palette(color: string, shade: number?)
 return function(color, shade)
-	if not shade then
-		shade = 500
-	end
+	shade = shade or 500 -- Default shade
 	
 	assert(palette[color], color .. ' is not a valid color')
 	assert(palette[color][shadeIndex[shade]], color .. ' ' .. shade .. ' is not a valid shade')
