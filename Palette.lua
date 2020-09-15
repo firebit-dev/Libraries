@@ -1,5 +1,5 @@
 --[[
-@name Promise
+@name Palette
 @description Color picker using Google Material's color system to define shades
 @version 1.0.1
 @author dig1t
