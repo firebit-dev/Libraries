@@ -15,11 +15,11 @@ local btnHover = Palette('blue', 300)
 button.BackgroundColor3 = btnColor
 
 button.MouseEnter:Connect(function()
-	btn.BackgroundColor3 = btnHover
+	button.BackgroundColor3 = btnHover
 end)
 
 button.MouseLeave:Connect(function()
-	btn.BackgroundColor3 = btnColor
+	button.BackgroundColor3 = btnColor
 end)
 ]]
 local shadeIndex = {
