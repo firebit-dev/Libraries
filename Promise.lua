@@ -29,19 +29,19 @@ Events
 		and can only be set once, if the primose is rejected then the callback run with return no parameters
 
 Examples
-
 local promise -- Blank variable to allow rejection during a waterfall
 
 promise = Promise.new(function(resolve, reject)
 	wait(1)
 	resolve(0)
-end):then(function(num)
+end):thenDo(function(num)
 	return num + 1
-end):then(function(num)
+end):thenDo(function(num)
 	promise:reject('error')
-end):catch(err)
+end):catch(function(err)
 	warn(err)
 end):finally(function(num)
+	print('finally', promise.status)
 	if promise.status ~= 'rejected' then
 		print(num)
 	end
@@ -73,18 +73,20 @@ function methods:resolve(...)
 	
 	for k, fn in ipairs(self._fulfillmentCallbacks) do
 		-- Set lastRes to the returned argument from the last callback.
-		lastRes = fn(lastRes)
+		lastRes = { fn(unpack(lastRes)) }
 		
 		if self.status ~= Promise.status.pending then
 			break
 		end
 	end
 	
-	self.status = Promise.status.fulfilled
+	if self.status == Promise.status.pending then
+		self.status = Promise.status.fulfilled
+	end
 	
 	-- If defined, last result will be passed to the finally event.
 	if self._onFinalizedCallback then
-		self._onFinalizedCallback(lastRes)
+		self._onFinalizedCallback(unpack(lastRes))
 	end
 end
 
